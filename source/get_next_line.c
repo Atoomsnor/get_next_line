@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:22 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/04 17:33:10 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:48:21 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ THEN GOES TROUGH IT TO SEE WHERE IT ACTUALLY ENDS*/
 
 char *get_next_line(int fd)
 {
-	char	*buffer;
-	static	int count = 1;
-	char	*line;
+	static int	count = 1;	// for testing
+	static char	*leftovers;
+	char		*buffer;
+	char		*line;
 
-	printf("malloc#[%d]---", count++);
+	printf("malloc#[%d]---", count++);	// for testing
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	line = buffer_fills_line(fd, buffer);
+	line = buffer_fills_line(fd, leftovers, buffer);
 	if (!line)
 	{
 		free(buffer);
@@ -69,7 +70,7 @@ char *get_next_line(int fd)
 	}
 	return (buffer);
 }
-static char	*buffer_fills_line(int fd, char *buffer)
+static char	*buffer_fills_line(int fd, char *leftovers, char *buffer)
 {	
 	int	bytes_read;
 	
