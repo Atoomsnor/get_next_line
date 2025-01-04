@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:30 by roversch          #+#    #+#             */
-/*   Updated: 2024/12/30 14:53:14 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/04 15:53:16 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 char	*get_next_line(int fd);
-void	*ft_calloc(size_t nmemb, size_t size);
+// void	*ft_calloc(size_t nmemb, size_t size);
 int		main(void);
 
 #endif
