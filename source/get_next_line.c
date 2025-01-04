@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:22 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/04 15:52:02 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:33:10 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,33 @@ THEN GOES TROUGH IT TO SEE WHERE IT ACTUALLY ENDS*/
 #include <unistd.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 3
+#define BUFFER_SIZE 5
 
 char *get_next_line(int fd)
 {
-	int   bytes_read;
-	char  *buffer;
-	static int count = 1;
+	char	*buffer;
+	static	int count = 1;
+	char	*line;
 
 	printf("malloc#[%d]---", count++);
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
-	if (buffer == NULL)
-	return (NULL);
-	bytes_read = read(fd, buffer, 3);
-	if (bytes_read <= 0)
+	if (!buffer)
+		return (NULL);
+	line = buffer_fills_line(fd, buffer);
+	if (!line)
 	{
-		free (buffer);
+		free(buffer);
 		return (NULL);
 	}
+	return (buffer);
+}
+static char	*buffer_fills_line(int fd, char *buffer)
+{	
+	int	bytes_read;
+	
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read <= 0)
+		return (NULL);
 	buffer[bytes_read] = '\0';
 	return (buffer);
 }
