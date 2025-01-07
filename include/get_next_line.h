@@ -6,18 +6,21 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:30 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/04 17:42:31 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:27:51 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-#include <stdlib.h>
+# include <stdlib.h>
 
 char	*get_next_line(int fd);
-static char	*buffer_fills_line(int fd, char *leftover, char *buffer);
-// void	*ft_calloc(size_t nmemb, size_t size);
-int		main(void);
+char	*buffer_fills_line(int fd, char *leftover, char *buffer);
+char	*find_end(char *line);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s);
+char	*ft_strchr(char *s, int c);
 
 #endif
