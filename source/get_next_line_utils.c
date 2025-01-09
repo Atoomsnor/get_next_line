@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:25 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/07 15:12:32 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:18:01 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t	i;
 	size_t	j;
 
-	i = 0;
-	j = 0;
-	res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)
 		return (NULL);
+	i = 0;
+	j = 0;
 	while (s1[j])
 		res[i++] = s1[j++];
 	j = 0;
@@ -70,30 +70,28 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s1)
 {
-	char	*dup_str;
-	size_t	len;
+	char	*dest;
 	size_t	i;
 
-	len = 0;
-	i = 0;
-	while (s[len])
-		len++;
-	dup_str = malloc(len + 1);
-	if (dup_str == NULL)
+	dest = (char *) malloc(ft_strlen(s1) + 1);
+	if (!dest)
 		return (NULL);
-	while (i < len)
+	i = 0;
+	while (s1[i])
 	{
-		dup_str[i] = s[i];
+		dest[i] = s1[i];
 		i++;
 	}
-	dup_str[len] = '\0';
-	return (dup_str);
+	dest[i] = 0;
+	return (dest);
 }
 
 char	*ft_strchr(char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == c)
