@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:22 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/14 13:38:59 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:18:52 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ char	*get_line(int fd, char *leftovers, char *buffer)
 	while (bytes_read > 0 && !ft_strchr(leftovers, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
+		if (bytes_read == READ_ERROR)
 			return (NULL);
-		if (bytes_read == 0)
+		if (bytes_read == READ_EOF)
 			break ;
 		buffer[bytes_read] = '\0';
 		if (!leftovers)
