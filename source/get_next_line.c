@@ -6,36 +6,13 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:22 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/14 14:18:52 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:22:50 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <get_next_line.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
-
-char	*get_next_line(int fd)
-{
-	static char	*leftovers;
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	line = get_line(fd, leftovers, buffer);
-	if (!line)
-	{
-		free(leftovers);
-		leftovers = NULL;
-		return (NULL);
-	}
-	leftovers = store_leftovers(&line);
-	return (line);
-}
 
 char	*get_line(int fd, char *leftovers, char *buffer)
 {
@@ -47,7 +24,10 @@ char	*get_line(int fd, char *leftovers, char *buffer)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == READ_ERROR)
+		{
+			free(leftovers);
 			return (NULL);
+		}
 		if (bytes_read == READ_EOF)
 			break ;
 		buffer[bytes_read] = '\0';
@@ -87,4 +67,22 @@ char	*store_leftovers(char **line)
 	free(*line);
 	*line = temp_line;
 	return (leftovers);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*leftovers;
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = get_line(fd, leftovers, buffer);
+	if (!line)
+	{
+		leftovers = NULL;
+		return (NULL);
+	}
+	leftovers = store_leftovers(&line);
+	return (line);
 }
