@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:30 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/10 15:43:07 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:39:09 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*buffer_fills_line(int fd, char *leftover, char *buffer);
-char	*find_end(char **line);
+char	*get_line(int fd, char *leftover, char *buffer);
+char	*store_leftovers(char **line);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

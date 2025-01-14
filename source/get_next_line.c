@@ -6,7 +6,7 @@
 /*   By: roversch <roversch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:20:22 by roversch          #+#    #+#             */
-/*   Updated: 2025/01/10 15:43:02 by roversch         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:38:59 by roversch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 char	*get_next_line(int fd)
 {
 	static char	*leftovers;
-	static char	buffer[BUFFER_SIZE];
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = buffer_fills_line(fd, leftovers, buffer);
+	line = get_line(fd, leftovers, buffer);
 	if (!line)
 	{
 		free(leftovers);
 		leftovers = NULL;
 		return (NULL);
 	}
-	leftovers = find_end(&line);
+	leftovers = store_leftovers(&line);
 	return (line);
 }
 
-char	*buffer_fills_line(int fd, char *leftovers, char *buffer)
+char	*get_line(int fd, char *leftovers, char *buffer)
 {
 	ssize_t	bytes_read;
 	char	*temp_leftovers;
@@ -62,7 +62,7 @@ char	*buffer_fills_line(int fd, char *leftovers, char *buffer)
 	return (leftovers);
 }
 
-char	*find_end(char **line)
+char	*store_leftovers(char **line)
 {
 	char	*leftovers;
 	char	*temp_line;
